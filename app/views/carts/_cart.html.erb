@@ -3,11 +3,11 @@
   <table>
     <%= render(cart.line_items) %>
     <tr class="total_line" >
-      <td colspan="2" >Total</td>
+      <td colspan="2" ><%= cart.total_items %>   Total</td>
       <td class="total_cell" ><%= number_to_currency(cart.total_price) %></td>
     </tr>
   </table>
-  <%= button_to "Checkout" , new_order_path, :method => :get %>
+  <%= link_to_function "Checkout" , "Depot.new_order('#{new_order_url}')", :remote => true  %>
   <%= button_to 'Empty cart' , cart, :method => :delete,
   :confirm => 'Are you sure?' %>
   

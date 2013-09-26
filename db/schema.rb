@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130916053505) do
+ActiveRecord::Schema.define(version: 20130924060937) do
 
   create_table "carts", force: true do |t|
     t.datetime "created_at"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20130916053505) do
     t.string   "pay_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "products", force: true do |t|
@@ -59,6 +60,7 @@ ActiveRecord::Schema.define(version: 20130916053505) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "admin",               default: false
   end
 
 end

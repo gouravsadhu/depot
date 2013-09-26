@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
- skip_before_filter :authorize, :only => [:create,:update,:destroy]
+ skip_before_filter :authorize, :only => [:show,:create,:update,:destroy]
+ skip_before_filter :user_authorize
   before_action :set_cart, only: [:edit, :update, :destroy]
 
   # GET /carts

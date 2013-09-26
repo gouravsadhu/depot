@@ -27,7 +27,18 @@
       </tr>
     <% end %>
   </tbody>
+ 
 </table>
+ <br/> <br/>
+ <div class="outline">
+  <ul><%= button_to_function "Prev" , "S.slider_method_n('#{@users.count}','2')", remote: true, :id => "link_hide_p" %>
+    <% @users.each do |user| %>
+    <li class="slide_p"><%= image_tag user.avatar.url(:thumb), :alt => user.name %> </li>
+    <% end %>
+<%= button_to_function "Next" , "S.slider_method_n('#{@users.count}','1')", remote: true , :id => "link_hide_n" %>
+   </ul>
+  
+ </div>
 
 <br>
 

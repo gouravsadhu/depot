@@ -23,6 +23,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -49,5 +50,8 @@ end
 
 gem 'will_paginate', '>= 3.0.pre'
 gem 'letter_opener'
+gem "rails_admin"
 
-gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+gem "paperclip", "3.4.2"
+gem 'thin'
+gem 'kaminari'

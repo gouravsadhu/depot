@@ -1,5 +1,10 @@
 Depot::Application.routes.draw do
+
+
+  mount RailsAdmin::Engine => '/user_admin', :as => 'rails_admin'
+
   get 'admin' => 'admin#index'
+#  get 'myorder' => 'myorder#index'
 
   controller :sessions do
     get 'login' => :new
@@ -7,9 +12,13 @@ Depot::Application.routes.draw do
     delete 'logout' => :destroy
   end
 
+  resources :orders do
+   get :my_order, :on => :collection
+  end
+
   resources :users
 
-  resources :orders
+#  resources :orders
 
   resources :line_items
 

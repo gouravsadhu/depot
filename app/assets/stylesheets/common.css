@@ -1,0 +1,40 @@
+.nav {
+  display:none;
+  position:absolute;
+  z-index:200px;
+  width: 10em;
+}
+
+#menu {
+  width: 10em;
+  background: #eee;
+  float:right;
+  
+}
+
+#menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#menu a {
+  font: bold 11px/16px arial, helvetica, sans-serif;
+  display: block;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc #888 #555 #bbb;
+  margin: 0;
+  padding: 2px 3px;
+}
+
+#menu a {
+  color: #000;
+  background: #efefef;
+  text-decoration: none;
+}
+
+#menu a:hover {
+  color: #a00;
+  background: #fff;
+}

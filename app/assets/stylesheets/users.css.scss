@@ -1,3 +1,23 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ .slide_p{
+   display:inline;
+   decoration:none;
+   border:10px;
+   display:none;
+ }          
+
+ .selecting{
+  display:inline;
+   }
+   
+   .deselecting{
+     display:none;
+    }    
+
+  .outline
+ {  border:2.5px solid black;
+    width:60%;
+ }

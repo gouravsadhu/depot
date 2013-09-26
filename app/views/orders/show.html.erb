@@ -1,5 +1,6 @@
+<% if notice %>
 <p id="notice"><%= notice %></p>
-
+<% end %>
 <p>
   <strong>Name:</strong>
   <%= @order.name %>
@@ -7,7 +8,7 @@
 
 <p>
   <strong>Address:</strong>
-  <%= @order.address %>
+  <%=   @order.address %>
 </p>
 
 <p>
@@ -19,6 +20,35 @@
   <strong>Pay type:</strong>
   <%= @order.pay_type %>
 </p>
+<% if session[:id] %>
+  <%= link_to 'edit', edit_order_path(@order) %>
+<% end %>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<br />
+<div class="cart_title">Order Placed </div>
+<br />
+<div id="product_list">
+  <table class="t_struct" >
+   
+      <% tot=0 %>
+      <th>Quantity</th>
+      <th>Product name </th>
+      <th>Price</th>
+      <% @order.line_items.each do |line_item| %>
+      <tr>
+        <td><%= line_item.product.title %></td>
+        <td><%= line_item.quantity %> </td>
+        <td class="item_price" ><%= number_to_currency(line_item.total_price) %></td>
+      </tr>
+      <%  tot += line_item.total_price %>
+      <% end %>
+      <tr class="total_line" >
+        <td colspan="2" >Total</td>
+        <td class="total_cell" ><%= number_to_currency(tot) %></td>
+      </tr>
+  
+  
+</table>
+</div>
+
+<%= link_to 'Back', my_order_orders_path %>

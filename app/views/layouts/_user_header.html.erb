@@ -1,0 +1,12 @@
+<!--
+<%= select_tag :user,options_for_select(["#{ session[:user_id]}","My Profile", "Setting" , "Logout"],"#{ session[:user_id]}") %>
+
+-->
+
+<a id="select">  <%= find_user_name(session[:user_id]) %> </a>
+<ul class="nav">
+  <li><%= link_to 'My profile', user_path(@user) %></li>
+  <li><%= link_to 'Setting', edit_user_path(@user) %></li>
+  <li><%= link_to 'Logout', logout_path, method: :delete %></li>
+</ul>
+

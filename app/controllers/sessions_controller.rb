@@ -1,7 +1,12 @@
 class SessionsController < ApplicationController
   skip_before_filter :authorize
+  skip_before_filter :user_authorize
 
   def new
+    if session[:user_id]
+      redirect_to admin_url, :alert => "Already login."
+    end
+    render layout: false if request.xhr?
   end
 
   def create
@@ -11,6 +16,7 @@ class SessionsController < ApplicationController
     else
       redirect_to login_url, :alert => "Invalid user/password combination"
     end
+
   end
 
   def destroy

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+  skip_before_filter :user_authorize, only: [:show, :edit, :update]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
 
@@ -45,7 +47,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to(users_url, :notice =>  "User #{@user.name} was successfully updated.") }
+        format.html { redirect_to((@user.admin ? users_url : user_url ), :notice =>  "User #{@user.name} was successfully updated.") }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

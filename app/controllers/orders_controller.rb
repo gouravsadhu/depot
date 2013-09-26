@@ -1,17 +1,19 @@
 class OrdersController < ApplicationController
-  skip_before_filter :authorize, only: [:new,:create]
+  skip_before_filter :user_authorize, only: [:new,:create, :my_order, :show]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   # GET /orders
   # GET /orders.json
   def index
+    # for will paginate
     @orders = Order.paginate :page => params[:page], :order => 'created_at desc', :per_page => 10
 
-     respond_to do |format|
+    # for kaminari
+    #   @order = Order.order('name').page(3).per(10)
+    respond_to do |format|
       format.html # index.html.erb
       format.xml { render :xml => @orders }
-end
-
+    end
   end
 
   # GET /orders/1
@@ -21,20 +23,13 @@ end
 
   # GET /orders/new
   def new
-   @cart = current_cart
+    @cart = current_cart
     if @cart.line_items.empty?
       redirect_to store_url, :notice => "Your cart is empty"
       return
     end
-
-   @order = Order.new
-
-      respond_to do |format|
-      format.html # new.html.erb
-      format.xml { render :xml => @order }
-end
-
-
+    @order = Order.new
+ #   render :layout => false if request.xhr?
   end
 
   # GET /orders/1/edit
@@ -44,15 +39,15 @@ end
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
+    @user = current_user
+    @order = @user.orders.new(order_params)
     @order.add_line_items_from_cart(current_cart)
-
     respond_to do |format|
       if @order.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
         Notifier.order_received(@order).deliver
-         format.html { redirect_to(store_url, :notice => 'Thank you for your order.' ) }
+        format.html { redirect_to(store_url, :notice => 'Thank you for your order.' ) }
         format.xml { render :xml => @order, :status => :created,:location => @order }
 
       else
@@ -86,14 +81,26 @@ end
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
+  def my_order
+    @user = current_user
+    orders = @user.orders
+    if params[:order] == "min"
+      @orders= orders.select { |o| o.with_min_quantity?}
+    elsif params[:order] == "max"
+      @orders= orders.select { |o| o.with_max_quantity?}
+    else
+      @orders = orders
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_params
-      params.require(:order).permit(:name, :address, :email, :pay_type)
-    end
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def order_params
+    params.require(:order).permit(:name, :address, :email, :pay_type)
+  end
 end

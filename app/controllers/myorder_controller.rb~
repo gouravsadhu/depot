@@ -1,0 +1,17 @@
+class MyorderController < ApplicationController
+  skip_before_filter :user_authorize
+  def index
+     @cart = current_cart
+
+    if @cart.line_items.empty?
+      redirect_to admin_url, :alert => "Your cart is empty"
+      return
+      else
+       myorder_p = @cart.line_items
+      myorder_p.each do |mo|
+        @myorder = Product.find(mo.product_id)
+      end
+
+    end
+  end
+end
